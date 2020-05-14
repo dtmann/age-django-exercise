@@ -1,0 +1,89 @@
+{% load static %}
+<html>
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <title>Age-Exercise</title>
+
+</head>
+
+<body class="m">
+    <h2>Age-Exercise</h2>
+    <hr>
+
+    <div class="addItem">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form}}
+                <button class="btn btn-primary mb-2" type="submit">Add Person</button>
+            </form>
+    </div>
+    <div class="current">
+        <h4>
+            Current People Submitted
+        </h4>
+        <hr>
+        <table>
+            <th width="3%">ID</th>
+            <th width="20%">Name</th>
+            <th width="10%">Date Of Birth</th>
+            <th width="5%">Age In Years</th>
+            <th width="10%">Age In Days</th>
+            <th width="10%">Age In Hours</th>
+            <th width="10%"></th>
+                {% for p in person %}
+                <tr>
+                    <td>{{p.id}}</td>
+                    <td>{{p.name}}</td>
+                    <td>{{p.dob}}</td>
+                    <td>{{p.age_y}}</td>
+                    <td>{{p.age_d}}</td>
+                    <td>{{p.age_h}}</td>
+                    <td>
+                        <form  action="/delete" method="POST">{% csrf_token %}
+                            <input class="hiddenform" type="text" id="did" name ="did" display="none" value="{{p.id}}">
+                            <button type="submit" class="btn btn-danger">Delete Person</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
+    <br><br><br><br><script src="{% static 'script.js' %}"></script>
+    <button type="button" id="buttonShow" class="btn btn-info" onclick="hideShow()">View Deleted People</button><br>    
+    <div id= "past" class="past" style="display: none;">
+        <h4>
+            Past People Submitted
+        </h4>
+        <hr>
+        <table>
+            <th width="3%">ID</th>
+            <th width="20%">Name</th>
+            <th width="10%">Date Of Birth</th>
+            <th width="5%">Age In Years</th>
+            <th width="10%">Age In Days</th>
+            <th width="10%">Age In Hours</th>
+            <th width="10%"></th>
+                {% for p in person_d %}
+                <tr>
+                    <td>{{p.id}}</td>
+                    <td>{{p.name}}</td>
+                    <td>{{p.dob}}</td>
+                    <td>{{p.age_y}}</td>
+                    <td>{{p.age_d}}</td>
+                    <td>{{p.age_h}}</td>
+                    <td>
+                        <form  action="/undelete" method="POST">{% csrf_token %}
+                            <input class="hiddenform" type="text" id="did" name ="did" display="none" value="{{p.id}}">
+                            <button type="submit" class="btn btn-success">Recover Person</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
+</body>
+
+
+
+</html>

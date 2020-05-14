@@ -1,0 +1,21 @@
+h2{
+    color: black;
+}
+
+body.m {
+    margin: 5%;
+    background: lightgray;
+    width: 80%;
+}
+
+table{
+    padding: 5px;
+}
+
+div#past {
+    display: none;
+}
+
+input.hiddenform{
+    display: none;
+}
